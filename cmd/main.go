@@ -5,10 +5,19 @@ import (
 	"log"
 	"os"
 	"soulgame/iternal/app"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
 
+	// Load environment variables from .env file
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Println("Warning: .env file not found, using environment variables")
+	}
+
+	// Setup configuration
 	var cfg app.Config
 	flag.StringVar(&cfg.DB.Host, "db-host", getEnvOrDefault("DB_HOST", "localhost"), "PostgreSQL host")
 	flag.StringVar(&cfg.DB.Port, "db-port", getEnvOrDefault("DB_PORT", "5432"), "PostgreSQL port")
@@ -18,8 +27,10 @@ func main() {
 	flag.StringVar(&cfg.Server.Port, "port", getEnvOrDefault("PORT", "8080"), "Server port")
 	flag.Parse()
 
+	// Initialize application
 	application := app.NewApplication(cfg)
 
+	// Connect to PostgreSQL
 	if err := application.ConnectToDatabase(); err != nil {
 		log.Fatal("Could not connect to PostgreSQL: ", err)
 	}
