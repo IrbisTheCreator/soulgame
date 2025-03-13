@@ -1,0 +1,23 @@
+{{template "base" .}}
+ 
+{{define "title"}}Домашняя страницы{{end}}
+ 
+{{define "main"}}
+    <h2>Список доступных заданий</h2>
+    {{if .Quests}}
+    <table>
+        <tr>
+            <th>Задание</th>
+            <th>Номер задания</th>
+        </tr>
+        {{range .Quests}}
+        <tr>
+            <td><a href='/snippet?id={{.Quest_id}}'>{{.Title}}</a></td>
+            <td>#{{.Quest_id}}</td>
+        </tr>
+        {{end}}
+    </table>
+    {{else}}
+        <p>Пока здесь ничего нет!</p>
+    {{end}}
+{{end}}
