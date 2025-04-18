@@ -30,7 +30,7 @@ func main() {
 	//keyFile := "/etc/letsencrypt/live/soulgame-bp.ru/privkey.pem"
 	dsn := flag.String(
 		"dsn",
-		"host=79.174.88.25 port=18561 user=soulgame password=b0712200sV__ dbname=soulgame sslmode=disable",
+		"host=******** port=**** user=soulgame password=******** dbname=soulgame sslmode=disable",
 		"Параметры подключения к БД",
 	)
 
