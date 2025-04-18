@@ -1,0 +1,108 @@
+{{template "secr" .}}
+
+{{define "title"}}Admin{{end}}
+
+{{define "main"}}
+    <table class="admin-table">
+        <tr>
+            <th>Id</th>
+            <th>Клиент</th>
+            <th>Задание</th>
+            <th>Действие</th>
+        </tr>
+        {{range .Admin}}
+        <tr>
+            <td>{{.Take_id}}</td>
+            <td>{{.Phone}}</td>
+            <td>{{.Title}}</td>
+            <td>
+                <button class="complete-btn" 
+                        data-take-id="{{.Take_id}}"
+                        data-user-id="{{.User_id}}"
+                        data-price="{{.Price}}"
+                        data-exp="{{.Exp}}"
+                        data-quest-id="{{.Quest_id}}"
+                        {{if ne .Now 2}}disabled{{end}}>
+                    {{if eq .Now 2}}Засчитать задание{{else}}Засчитано{{end}}
+                </button>
+            </td>
+        </tr>
+        {{end}}
+    </table>
+
+    <!-- Большая кнопка "История" -->
+    <div class="history-btn-container">
+        <a href="/log" class="history-btn">История</a>
+    </div>
+
+    <script>
+    document.querySelectorAll('.complete-btn').forEach(button => {
+        button.addEventListener('click', async function() {
+            const takeId = this.getAttribute('data-take-id');
+            const userId = this.getAttribute('data-user-id');
+            const price = this.getAttribute('data-price');
+            const exp = this.getAttribute('data-exp');
+            const quest_id = this.getAttribute('data-quest-id');
+            
+            // Блокируем кнопку на время запроса
+            this.disabled = true;
+            this.textContent = 'Обработка...';
+            
+            try {
+                const response = await fetch('/complete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        take_id: parseInt(takeId),
+                        user_id: parseInt(userId),
+                        price: parseInt(price),
+                        exp: parseInt(exp),
+                        quest_id: parseInt(quest_id), // Преобразуем в число
+                    })
+                });
+                
+                if (response.ok) {
+                    // Успешно - меняем текст кнопки
+                    this.textContent = 'Засчитано';
+                    this.style.backgroundColor = '#4CAF50';
+                } else {
+                    const error = await response.json();
+                    this.disabled = false;
+                    this.textContent = 'Засчитать задание';
+                    alert(error.message || 'Ошибка при выполнении запроса');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                this.disabled = false;
+                this.textContent = 'Засчитать задание';
+                alert('Ошибка соединения');
+            }
+        });
+    });
+    </script>
+
+    <style>
+        /* Стили для кнопки История */
+        .history-btn-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .history-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .history-btn:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+{{end}}

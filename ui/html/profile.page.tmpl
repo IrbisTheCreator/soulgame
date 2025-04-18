@@ -1,0 +1,28 @@
+{{template "base" .}}
+
+{{define "title"}}Профиль{{end}}
+
+{{define "main"}}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="avatar-container">
+            <img src="/static/img/avatar.jpg" alt="Аватар" class="profile-avatar">
+        </div>
+        <div class="profile-info">
+            <h1 class="profile-phone">{{.Phone}}</h1>
+            <div class="profile-level">Уровень: <span class="level-value">{{.User.Level}}</span></div>
+        </div>
+    </div>
+    
+    <div class="progress-container">
+        <div class="progress-label">
+            Опыт: <span class="exp-value">{{.User.Exp}}</span>/100
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: {{.User.Exp}}%"></div>
+        </div>
+    </div>
+</div>
+
+
+{{end}}

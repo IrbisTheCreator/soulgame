@@ -1,0 +1,637 @@
+/* main.css */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;700&display=swap');
+
+:root {
+    --black: #121212;
+    --dark-blue: #1a1a2e;
+    --blue: #16213e;
+    --purple: #4a148c;
+    --light-purple: #7b1fa2;
+    --accent: #bb86fc;
+    --text: #e1e1e1;
+    --text-secondary: #b0b0b0;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+}
+
+body {
+    background-color: var(--black);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-weight: 500;
+}
+
+header {
+    background: linear-gradient(90deg, var(--black), var(--dark-blue), var(--purple));
+    padding: 1.5rem 0;
+    border-bottom: 2px solid var(--accent);
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+header a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+header a:hover {
+    color: var(--accent);
+}
+
+.logo {
+    height: 100px;
+    width: auto;
+}
+
+nav {
+    background-color: var(--dark-blue);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--purple);
+}
+
+nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin: 0 1rem;
+    padding: 0.5rem;
+    transition: all 0.3s;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+nav a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+main {
+    flex: 1;
+    padding: 2rem 0;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.main-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/static/img/fon.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: 0;
+}
+
+.main-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(26, 26, 46, 0.7);
+    z-index: 1;
+}
+
+footer {
+    background-color: var(--dark-blue);
+    padding: 1.2rem;
+    text-align: center;
+    border-top: 1px solid var(--purple);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Таблица заданий */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background-color: rgba(22, 33, 62, 0.9);
+    border-radius: 8px;
+    overflow: hidden;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+th {
+    background-color: rgba(74, 20, 140, 0.9);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+}
+
+th, td {
+    padding: 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--purple);
+}
+
+tr:hover {
+    background-color: rgba(74, 20, 140, 0.2);
+}
+
+/* Кнопки */
+button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.take-quest-btn {
+    background-color: var(--light-purple);
+    color: white;
+}
+
+.checkin {
+    background-color: var(--light-purple);
+    color: white;
+}
+
+.take-quest-btn:hover {
+    background-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.complete-quest-btn {
+    background-color: var(--accent);
+    color: var(--black);
+}
+
+.complete-quest-btn:hover {
+    background-color: #d1a4ff;
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    background-color: var(--text-secondary);
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Форма регистрации */
+.registration-form {
+    max-width: 500px;
+    margin: 2.5rem auto;
+    padding: 2.2rem;
+    background-color: rgba(22, 33, 62, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    border: 1px solid var(--accent);
+}
+
+.registration-form h2 {
+    text-align: center;
+    margin-bottom: 1.8rem;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+.registration-form input {
+    width: 100%;
+    padding: 0.9rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--purple);
+    border-radius: 4px;
+    background-color: var(--dark-blue);
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.registration-form button {
+    width: 100%;
+    padding: 0.9rem;
+    background-color: var(--light-purple);
+    color: white;
+    font-weight: 700;
+    margin-top: 1.2rem;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.registration-form button:hover {
+    background-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.error-message {
+    color: #ff6b6b;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Правила выполнения заданий */
+.rules-section {
+    margin-top: 2.5rem;
+    padding: 1.8rem;
+    background-color: rgba(22, 33, 62, 0.9);
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.rules-section h3 {
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.rules-list {
+    list-style-type: none;
+    padding-left: 1.2rem;
+}
+
+.rules-list li {
+    position: relative;
+    padding-left: 1.8rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.rules-list li::before {
+    content: "»";
+    color: var(--accent);
+    font-size: 1.2rem;
+    position: absolute;
+    left: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    th, td {
+        padding: 0.8rem;
+    }
+    
+    .registration-form {
+        padding: 1.5rem;
+        margin: 1.5rem;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .rules-section {
+        margin: 1.5rem;
+        padding: 1.2rem;
+    }
+}
+
+/* Анимации */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.take-quest-btn {
+    animation: pulse 2s infinite;
+}
+
+.checkin {
+    animation: pulse 2s infinite;
+}
+
+.take-quest-btn:hover {
+    animation: none;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(22, 33, 62, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--accent);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.avatar-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 15px rgba(187, 134, 252, 0.3);
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-phone {
+    font-size: 2.5rem;
+    margin: 0;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+.profile-level {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.level-value {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.progress-container {
+    margin-top: 2rem;
+}
+
+.progress-label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.exp-value {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: var(--dark-blue);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--light-purple), var(--accent));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-phone {
+        font-size: 2rem;
+    }
+    
+    .profile-level {
+        font-size: 1.3rem;
+    }
+}
+
+.purchase-container {
+    position: relative;
+    display: flex;
+    gap: 10px;
+}
+
+.buy-btn {
+    padding: 8px 15px;
+    background-color: var(--light-purple);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.buy-btn:hover {
+    background-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.buy-btn:disabled {
+    background-color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.club-select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--purple);
+    background-color: var(--dark-blue);
+    color: var(--text);
+    min-width: 180px;
+    cursor: pointer;
+}
+
+.club-select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.3);
+}
+
+/* Адаптивность для выпадающего списка */
+@media (max-width: 600px) {
+    .purchase-container {
+        flex-direction: column;
+    }
+    
+    .club-select {
+        width: 100%;
+    }
+}
+
+.purchase-history {
+    margin-top: 40px;
+    background-color: rgba(22, 33, 62, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--accent);
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.history-table th {
+    background-color: var(--purple);
+    padding: 12px;
+    text-align: left;
+}
+
+.history-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--purple);
+}
+
+.issued {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.not-issued {
+    color: #F44336;
+    font-weight: bold;
+}
+
+.no-history {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-secondary);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .history-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .purchase-history {
+        padding: 15px;
+    }
+}
+
+.password-change-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(22, 33, 62, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--accent);
+}
+
+.password-change-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--purple);
+    border-radius: 5px;
+    background-color: var(--dark-blue);
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.9rem;
+    background-color: var(--light-purple);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    background-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.error-message {
+    color: #ff6b6b;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .password-change-form {
+        padding: 1.5rem;
+        margin: 1.5rem;
+    }
+}

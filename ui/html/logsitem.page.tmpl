@@ -1,0 +1,30 @@
+{{template "secr" .}}
+
+{{define "title"}}История выданных предметов{{end}}
+
+{{define "main"}}
+<h2>Лог выданных предметов</h2>
+<table class="admin-table">
+    <tr>
+        <th>Id</th>
+        <th>Клиент</th>
+        <th>Предмет</th>
+        <th>Клуб</th>
+        <th>Время покупки</th>
+    </tr>
+    {{range .History}}
+    <tr>
+        <td>{{.Purc_id}}</td>
+        <td>{{.Phone}}</td>
+        <td>{{.ItemTitle}}</td>
+        <td>
+            {{if eq .ClubName "1"}}Лесная
+            {{else if eq .ClubName "2"}}Балтийская
+            {{else}}{{.ClubName}}
+            {{end}}
+        </td>
+        <td>{{.PurchaseDate.Format "02.01.2006 15:04"}}</td>
+    </tr>
+    {{end}}
+</table>
+{{end}}

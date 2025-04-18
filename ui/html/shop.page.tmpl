@@ -1,0 +1,88 @@
+{{template "base" .}}
+
+{{define "title"}}Выбор заданий{{end}}
+
+{{define "main"}}
+    <h2>Доступные товары за души</h2>
+    <table>
+        <tr>
+            <th>Предмет</th>
+            <th>Описание предмета</th>
+            <th>Стоимость</th>
+            <th>Осталось</th>
+            {{if .Phone}}<th>Действие</th>{{end}}
+        </tr>
+        {{range .Shop}}
+        <tr>
+            <td>{{.Title}}</td>
+            <td>{{.Description}}</td>
+            <td>{{.Price}} душ</td>
+            <td>
+            {{if eq .Count -1}}
+                Не ограничено
+            {{else}}
+                {{.Count}} штук
+            {{end}}
+            </td>
+            {{if $.Phone}}
+            <td>
+                <div class="purchase-container">
+                    <button class="buy-btn" data-item-id="{{.Shop_id}}">Купить</button>
+                    <div class="club-selector">
+                        <select class="club-select" data-item-id="{{.Shop_id}}">
+                            <option value="">Выберите клуб</option>
+                            <option value="1">Клуб на Лесной, Большой сампсониевский 69К1</option>
+                            <option value="2">Клуб на Балтийской, 12-я Красноармейская 3</option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+            {{end}}
+        </tr>
+
+
+        {{end}}
+
+    </table>
+
+    {{if .Phone}}
+    <div class="purchase-history">
+        <h2>История покупок</h2>
+        <table class="history-table">
+            <tr>
+                <th>Дата и время</th>
+                <th>Товар</th>
+                <th>Клуб</th>
+                <th>Статус</th>
+            </tr>
+            {{range .History}}
+            <tr>
+                <td>{{.PurchaseDate.Format "02.01.2006 15:04"}}</td>
+                <td>{{.ItemTitle}}</td>
+                <td>
+                {{if eq .ClubName "1"}}
+                        Лесная
+                    {{else if eq .ClubName "2"}}
+                        Балтийская
+                    {{else}}
+                        {{.ClubName}}
+                    {{end}}
+                </td>
+                <td>
+                    {{if .IsIssued}}
+                        <span class="issued">Выдано</span>
+                    {{else}}
+                        <span class="not-issued">Не выдано</span>
+                    {{end}}
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="4" class="no-history">Нет истории покупок</td>
+            </tr>
+            {{end}}
+        </table>
+    </div>
+    {{end}}
+    
+{{end}}

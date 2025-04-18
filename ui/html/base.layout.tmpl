@@ -1,0 +1,41 @@
+{{define "base"}}
+<!doctype html>
+<html lang='ru'>
+    <head>
+        <meta charset='utf-8'>
+        <title>{{template "title" .}} - SOULGAME</title>
+        <link rel='stylesheet' href='/static/css/main.css'>
+        <link rel='shortcut icon' href='/static/img/favicon.ico' type='image/x-icon'>
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700'>
+    </head>
+    <body>
+        <header>
+            <h1>
+            <img src="/static/img/logo3.png" alt="Логотип" class="logo">
+            </h1>
+        </header>
+        <nav>
+            <a href='/'>Выбор заданий</a>
+            <a href='/shop'>Магазин</a>
+            {{ if .Phone }}   
+            <a href="/profile">{{ .Phone }}</a>
+            <a href='/unlogin'>Выйти</a>
+            <a href='/repass'>Смена пароля</a>
+            <span><strong>У вас {{ .Souls }} душ</strong></span>
+            {{ else }}
+            <a href="/login">Войти</a>
+            <a href="/new">Зарегистрироваться</a>
+            {{ end }}
+        </nav>
+        <main>
+        
+            <div class="main-background"></div>
+            <div class="content-container">
+            {{template "main" .}}
+            </div>
+        </main>
+        {{template "footer" .}}
+        <script src="/static/js/main.js" type="text/javascript"></script>
+    </body>
+</html>
+{{end}}

@@ -1,0 +1,70 @@
+{{template "secr" .}}
+
+{{define "title"}}Удаление заданий{{end}}
+
+{{define "main"}}
+
+<h2>Список доступных заданий</h2>
+    <table>
+        <tr>
+            <th>Задание</th>
+            <th>Описание</th>
+            <th>Опыт</th>
+            <th>Стоимость</th>
+            <th>Действие</th>
+        </tr>
+        {{range $index, $quest := .Quests}} <!-- Используем $index для доступа к статусу -->
+        <tr>
+            <td>{{$quest.Title}}</td>
+            <td>{{$quest.Description}}</td>
+            <td>{{$quest.Exp}} опыта</td>
+            <td>{{$quest.Price}} душ</td>
+            <td>
+                <button class="del-btn" data-quest-id="{{.Quest_id}}">Удалить</button>
+            </td>
+            
+        </tr>
+        {{end}}
+    </table>
+
+    <script>
+    document.querySelectorAll('.del-btn').forEach(button => {
+        button.addEventListener('click', async function() {
+            const questID = this.getAttribute('data-quest-id');
+            
+            // Блокируем кнопку на время запроса
+            this.disabled = true;
+            this.textContent = 'Обработка...';
+            
+            try {
+                const response = await fetch('/delquest', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        quest_id: parseInt(questID), // Преобразуем в число
+                    })
+                });
+                
+                if (response.ok) {
+                    // Успешно - меняем текст кнопки
+                    this.textContent = 'Удалено';
+                    this.style.backgroundColor = '#4CAF50';
+                } else {
+                    const error = await response.json();
+                    this.disabled = false;
+                    this.textContent = 'Удалить';
+                    alert(error.message || 'Ошибка при выполнении запроса');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                this.disabled = false;
+                this.textContent = 'Удалить';
+                alert('Ошибка соединения');
+            }
+        });
+    });
+    </script>
+
+{{end}}

@@ -1,0 +1,82 @@
+{{template "secr" .}}
+
+{{define "title"}}Удаление предметов{{end}}
+
+{{define "main"}}
+
+<h2>Доступные товары за души</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Предмет</th>
+            <th>Описание предмета</th>
+            <th>Стоимость</th>
+            <th>Осталось</th>
+            <th>Действие</th>
+        </tr>
+        {{range .Shop}}
+        <tr>
+            <td>{{.Shop_id}}</td>
+            <td>{{.Title}}</td>
+            <td>{{.Description}}</td>
+            <td>{{.Price}} душ</td>
+            <td>
+            {{if eq .Count -1}}
+                Не ограничено
+            {{else}}
+                {{.Count}} штук
+            {{end}}
+            </td>
+            
+            <td>
+                    <button class="del-btn" data-shop-id="{{.Shop_id}}">Удалить</button>
+            </td>
+            
+        </tr>
+
+
+        {{end}}
+
+    </table>
+
+    <script>
+    document.querySelectorAll('.del-btn').forEach(button => {
+        button.addEventListener('click', async function() {
+            const shopID = this.getAttribute('data-shop-id');
+            
+            // Блокируем кнопку на время запроса
+            this.disabled = true;
+            this.textContent = 'Обработка...';
+            
+            try {
+                const response = await fetch('/delitem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        shop_id: parseInt(shopID), // Преобразуем в число
+                    })
+                });
+                
+                if (response.ok) {
+                    // Успешно - меняем текст кнопки
+                    this.textContent = 'Удалено';
+                    this.style.backgroundColor = '#4CAF50';
+                } else {
+                    const error = await response.json();
+                    this.disabled = false;
+                    this.textContent = 'Удалить';
+                    alert(error.message || 'Ошибка при выполнении запроса');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                this.disabled = false;
+                this.textContent = 'Удалить';
+                alert('Ошибка соединения');
+            }
+        });
+    });
+    </script>
+
+{{end}}

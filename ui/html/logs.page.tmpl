@@ -1,0 +1,33 @@
+{{template "secr" .}}
+
+{{define "title"}}Admin{{end}}
+
+{{define "main"}}
+<div class="container">
+    <h2>Лог выполненных заданий</h2>
+    <table class="task-log-table">
+        <thead>
+            <tr>
+                <th>Log ID</th>
+                <th>Номер телефона</th>
+                <th>Задание</th>
+                <th>Время и дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Log}}
+            <tr>
+                <td>{{.Log_id}}</td>
+                <td>{{.Phone}}</td>
+                <td>{{.Title}}</td>
+                <td>{{.Time.Format "2006-01-02 15:04:05"}}</td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="4">Нет данных для отображения</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+</div>
+{{end}}

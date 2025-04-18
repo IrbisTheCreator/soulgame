@@ -1,0 +1,134 @@
+{{template "secr" .}}
+
+{{define "title"}}История покупок{{end}}
+
+{{define "main"}}
+<table class="admin-table">
+    <tr>
+        <th>Id</th>
+        <th>Клиент</th>
+        <th>Предмет</th>
+        <th>Клуб</th>
+        <th>Время покупки</th>
+        <th>Действие</th>
+    </tr>
+    {{range .History}}
+    <tr>
+        <td>{{.Purc_id}}</td>
+        <td>{{.Phone}}</td>
+        <td>{{.ItemTitle}}</td>
+        <td>
+            {{if eq .ClubName "1"}}Лесная
+            {{else if eq .ClubName "2"}}Балтийская
+            {{else}}{{.ClubName}}
+            {{end}}
+        </td>
+        <td>{{.PurchaseDate.Format "02.01.2006 15:04"}}</td>
+        <td>
+            <button class="complete-btn"
+            data-purc-id="{{.Purc_id}}"
+            >
+            Засчитать
+            </button>
+        </td>
+    </tr>
+    {{end}}
+</table>
+
+<div class="history-btn-container">
+        <a href="/log/item" class="history-btn">История</a>
+</div>
+
+<script>
+    document.querySelectorAll('.complete-btn').forEach(button => {
+        button.addEventListener('click', async function() {
+            const purcID = this.getAttribute('data-purc-id');
+            
+            // Блокируем кнопку на время запроса
+            this.disabled = true;
+            this.textContent = 'Обработка...';
+            
+            try {
+                const response = await fetch('/completeitem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        purc_id: parseInt(purcID), // Преобразуем в число
+                    })
+                });
+                
+                if (response.ok) {
+                    // Успешно - меняем текст кнопки
+                    this.textContent = 'Засчитано';
+                    this.style.backgroundColor = '#4CAF50';
+                } else {
+                    const error = await response.json();
+                    this.disabled = false;
+                    this.textContent = 'Засчитать';
+                    alert(error.message || 'Ошибка при выполнении запроса');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                this.disabled = false;
+                this.textContent = 'Засчитать';
+                alert('Ошибка соединения');
+            }
+        });
+    });
+    </script>
+
+<style>
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    
+    .admin-table th, .admin-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .admin-table th {
+        font-weight: 600;
+    }
+    
+    .complete-btn {
+        background-color: blue;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    
+    .complete-btn:hover {
+        background-color: #45a049;
+    }
+
+    .history-btn-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .history-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .history-btn:hover {
+            background-color: #0b7dda;
+        }
+</style>
+{{end}}

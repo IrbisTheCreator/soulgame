@@ -1,0 +1,70 @@
+{{template "base" .}}
+
+{{define "title"}}Выбор заданий{{end}}
+
+{{define "main"}}
+    <h2>Список доступных заданий</h2>
+    <table>
+        <tr>
+            <th>Задание</th>
+            <th>Описание</th>
+            <th>Опыт</th>
+            <th>Стоимость</th>
+            {{ if .Phone }}
+            <th>Действие</th>
+            {{end}}
+        </tr>
+        <tr>
+            <td>Ежедневный вход</td>
+            <td>Отмениться на сайте</td>
+            <td>5 опыта</td>
+            <td>5 душ</td>
+            {{ if .Phone }}
+            <td>
+                {{if eq (index $.Status 3) 0}} <!-- Проверяем статус для статического задания -->
+                    <button class="checkin" data-quest-id="10">Отметиться</button>
+                {{else}}
+                    <button disabled = true>Выполнено</button>
+                {{end}}
+            </td>
+            {{end}}
+        </tr>
+
+        {{range $index, $quest := .Quests}} <!-- Используем $index для доступа к статусу -->
+        <tr>
+            <td>{{$quest.Title}}</td>
+            <td>{{$quest.Description}}</td>
+            <td>{{$quest.Exp}} опыта</td>
+            <td>{{$quest.Price}} душ</td>
+            {{ if $.Phone }}
+                <td>
+                    {{if eq (index $.Status $index) 0}} <!-- Проверяем статус для текущего задания -->
+                        <button class="take-quest-btn" data-quest-id="{{$quest.Quest_id}}">Взять задание</button>
+                    {{else if eq (index $.Status $index) 1}}
+                        <button class="complete-quest-btn" data-quest-id="{{$quest.Quest_id}}">Сдать задание</button>
+                    {{else if eq (index $.Status $index) 2}}
+                        <button disabled = true>Ожидайте проверки</button>
+                    {{else if eq (index $.Status $index) 3}}
+                         <button disabled = true>Выполнено</button>   
+                    {{end}}
+                </td>
+            {{end}}
+        </tr>
+        {{end}}
+    </table>
+    <div class="rules-section">
+        <h3>Правила выполнения заданий:</h3>
+        <ul class="rules-list">
+            <li>Задание считается выполненным только в компьютерных клубах SoulGame</li>
+            <li>Каждое задание можно выполнить только один раз в день</li>
+            <li>Награда за задание начисляется после проверки администратором</li>
+            <li>Задания обновляются в 00:00 по Московскому времени</li>
+            <li>Запрещается использование читов и эксплоитов для выполнения заданий</li>
+            <li>Выполнение заданий возможно только в публичных матчах</li>
+            <li>Администратор вправе отменить награду за нечестное выполнение задания</li>
+            <li>При обнаружении багов в заданиях сообщите администрации</li>
+            <li>Награды выдаются только на аккаунты клуба, с тем же номером телефона</li>
+            <li>Администрация клуба в праве менять правила по своему усмотрению (уточняйте правила на стойке администрации)</li>
+        </ul>
+    </div>
+{{end}}

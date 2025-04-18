@@ -1,0 +1,34 @@
+{{template "base" .}}
+
+{{define "title"}}Смена пароля{{end}}
+
+{{define "main"}}
+<div class="password-change-form">
+    <h2>Смена пароля</h2>
+    
+    {{if .Error}}
+    <div class="error-message">
+        {{.Error}}
+    </div>
+    {{end}}
+    
+    <form action="/repass" method="POST">
+        <div class="form-group">
+            <label for="old_password">Текущий пароль:</label>
+            <input type="password" id="old_password" name="old_password" required minlength="8">
+        </div>
+        
+        <div class="form-group">
+            <label for="new_password">Новый пароль:</label>
+            <input type="password" id="new_password" name="new_password" required minlength="8">
+        </div>
+        
+        <div class="form-group">
+            <label for="confirm_password">Повторите новый пароль:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required minlength="8">
+        </div>
+        
+        <button type="submit" class="submit-btn">Сменить пароль</button>
+    </form>
+</div>
+{{end}}
